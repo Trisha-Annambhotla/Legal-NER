@@ -1,0 +1,40 @@
+{
+  "case_number": "700",
+  "judge": "SUGATO MAJUMDAR",
+  "date": null,
+  "petitioner": "Sanjay Mallick",
+  "respondent": "Gour Chand Mallick",
+  "entities": {
+    "PERSON": [
+      "SUGATO MAJUMDAR"
+    ],
+    "ORG": [],
+    "DATE": [],
+    "CASE_NUMBERS": [],
+    "LAW": [],
+    "GPE": [],
+    "NORP": []
+  },
+  "all_judges": [
+    "SUGATO MAJUMDAR"
+  ],
+  "acts_sections": [],
+  "extraction_sources": {
+    "rule_based": {
+      "case_numbers": [],
+      "judges": [
+        "SUGATO MAJUMDAR"
+      ],
+      "dates": [],
+      "petitioner": null,
+      "respondent": null
+    },
+    "spacy": {}
+  },
+  "_meta": {
+    "filename": "WBCHCO0000011947_1_2022-12-14.pdf",
+    "total_pages": 2,
+    "processed_at": "2026-04-06T10:20:08.332797",
+    "spacy_used": true
+  }
+}
