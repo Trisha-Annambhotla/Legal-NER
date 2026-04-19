@@ -1,74 +1,87 @@
-import fitz  # PyMuPDF
+import json
 import os
-import re
+import spacy
+from spacy.tokens import DocBin
 
-INPUT_FOLDER = "judgements"
-OUTPUT_FOLDER = "extracted_text"
-
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-
-
-def clean_text(text):
-    text = re.sub(r'\n+', '\n', text)              # remove extra newlines
-    text = re.sub(r'Page\s*\d+', '', text)         # remove page numbers
-    text = re.sub(r'\s+', ' ', text)               # normalize spaces
-    return text.strip()
+nlp = spacy.blank("en")
+TEXT_FOLDER = "extracted_text"
 
 
-def extract_text_from_pdf(pdf_path):
-    try:
-        doc = fitz.open(pdf_path)
-        full_text = ""
+def load_text(file_id):
+    file_number = file_id.split("_")[-1]
 
-        for page_num, page in enumerate(doc):
-            blocks = page.get_text("blocks")
-            
-            # Sort blocks: top-to-bottom, left-to-right
-            blocks.sort(key=lambda b: (b[1], b[0]))
+    for file in os.listdir(TEXT_FOLDER):
+        if file.startswith(file_number + "."):
+            print(f"Matched: {file}")
+            with open(os.path.join(TEXT_FOLDER, file), "r", encoding="utf-8") as f:
+                return f.read()
 
-            page_text = ""
-            for block in blocks:
-                page_text += block[4] + "\n"
-
-            full_text += f"\n\n--- PAGE {page_num + 1} ---\n\n"
-            full_text += page_text
-
-        return clean_text(full_text)
-
-    except Exception as e:
-        print(f"❌ Error processing {pdf_path}: {e}")
-        return None
+    print(f"No file for {file_id}")
+    return ""
 
 
-def main():
-    files = os.listdir(INPUT_FOLDER)
+def find_spans(text, entity_text):
+    spans = []
+    start = 0
 
-    pdf_files = [f for f in files if f.lower().endswith(".pdf")]
+    while True:
+        start = text.find(entity_text, start)
+        if start == -1:
+            break
+        end = start + len(entity_text)
+        spans.append((start, end))
+        start = end
 
-    if not pdf_files:
-        print("⚠️ No PDF files found in 'judgements' folder.")
-        return
-
-    print(f"📄 Found {len(pdf_files)} PDF(s)\n")
-
-    for file in pdf_files:
-        pdf_path = os.path.join(INPUT_FOLDER, file)
-        print(f"🔄 Processing: {file}")
-
-        text = extract_text_from_pdf(pdf_path)
-
-        if text:
-            output_file = os.path.join(
-                OUTPUT_FOLDER, file.replace(".pdf", ".txt")
-            )
-
-            with open(output_file, "w", encoding="utf-8") as f:
-                f.write(text)
-
-            print(f"✅ Saved: {output_file}\n")
-        else:
-            print(f"⚠️ Skipped: {file}\n")
+    return spans
 
 
-if __name__ == "__main__":
-    main()
+def process_file(input_file):
+    with open(input_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    doc_bin = DocBin()
+    rag_data = []
+
+    for file_id, doc in data.items():
+        print(f"\nProcessing {file_id}")
+
+        full_text = load_text(file_id)
+        print("Text length:", len(full_text))
+
+        if not full_text:
+            continue
+
+        spacy_doc = nlp.make_doc(full_text)
+        ents = []
+
+        for ent in doc.get("entities", []):
+            spans = find_spans(full_text, ent["text"])
+
+            for start, end in spans:
+                span = spacy_doc.char_span(start, end, label=ent["label"])
+                if span:
+                    ents.append(span)
+
+        spacy_doc.ents = ents
+        doc_bin.add(spacy_doc)
+
+        rag_data.append({
+            "file_no": file_id,
+            "case_name": doc.get("case_title"),
+            "structured": doc.get("structured", {})
+        })
+
+    print("\nTotal docs:", len(list(doc_bin.get_docs(nlp.vocab))))
+    return doc_bin, rag_data
+
+
+# -------- RUN -------- #
+doc_bin, rag_output = process_file("master_annotations.json")
+
+print("Saving files...")
+doc_bin.to_disk("train.spacy")
+
+with open("rag_data.json", "w", encoding="utf-8") as f:
+    json.dump(rag_output, f, indent=2, ensure_ascii=False)
+
+print("✅ Files created!")

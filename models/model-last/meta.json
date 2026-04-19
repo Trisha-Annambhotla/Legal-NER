@@ -2,13 +2,13 @@
   "lang":"en",
   "name":"pipeline",
   "version":"0.0.0",
-  "spacy_version":">=3.8.13,<3.9.0",
+  "spacy_version":">=3.8.14,<3.9.0",
   "description":"",
   "author":"",
   "email":"",
   "url":"",
   "license":"",
-  "spacy_git_version":"fdca647",
+  "spacy_git_version":"0069cf9",
   "vectors":{
     "width":0,
     "vectors":0,
@@ -21,27 +21,17 @@
 
     ],
     "ner":[
-      "ACCUSED",
-      "ACT_NAME",
-      "BAIL_STATUS",
-      "CASE_NUMBER",
-      "CASE_TYPE",
-      "CITATION",
-      "COURT_NAME",
-      "EVIDENCE",
-      "FINAL_VERDICT",
-      "FIR_NUMBER",
-      "GOVERNMENT_COUNSEL",
+      "CASE_NAME",
+      "COURT",
+      "DATE",
       "JUDGE",
-      "LOWER_COURT",
-      "ORDER_DATE",
-      "ORG",
-      "PARAGRAPH_NUMBER",
-      "PRECEDENT_CASE",
+      "LAWYER",
+      "LEGAL_TERM",
+      "PETITIONER",
+      "PROVISION",
       "RESPONDENT",
-      "SECTION",
-      "SECTION_HEADER",
-      "SENIOR_ADVOCATE"
+      "STATUTE",
+      "VERDICT"
     ]
   },
   "pipeline":[
@@ -56,11 +46,56 @@
 
   ],
   "performance":{
-    "ents_f":0.1538461538,
-    "ents_p":0.1538461538,
-    "ents_r":0.1538461538,
+    "ents_f":0.0895522388,
+    "ents_p":0.2,
+    "ents_r":0.0576923077,
     "ents_per_type":{
-      "CASE_NUMBER":{
+      "COURT":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "LEGAL_TERM":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "DATE":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "PROVISION":{
+        "p":0.75,
+        "r":0.25,
+        "f":0.375
+      },
+      "STATUTE":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "CASE_NAME":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "RESPONDENT":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "PETITIONER":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "LAWYER":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "VERDICT":{
         "p":0.0,
         "r":0.0,
         "f":0.0
@@ -69,59 +104,9 @@
         "p":0.0,
         "r":0.0,
         "f":0.0
-      },
-      "CORAM":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "FIR_NUMBER":{
-        "p":1.0,
-        "r":1.0,
-        "f":1.0
-      },
-      "POLICE_STATION":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "GOVERNMENT_COUNSEL":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "ACT_NAME":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "ACCUSED":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "SENIOR_ADVOCATE":{
-        "p":0.25,
-        "r":0.2,
-        "f":0.2222222222
-      },
-      "RESPONDENT":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "JUDGMENT_DATE":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "CASE_TYPE":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
       }
     },
-    "tok2vec_loss":0.0,
-    "ner_loss":48.9570045471
+    "tok2vec_loss":118.4032725676,
+    "ner_loss":140.2387542725
   }
 }

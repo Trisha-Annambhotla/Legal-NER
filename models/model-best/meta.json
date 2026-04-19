@@ -2,13 +2,13 @@
   "lang":"en",
   "name":"pipeline",
   "version":"0.0.0",
-  "spacy_version":">=3.8.13,<3.9.0",
+  "spacy_version":">=3.8.14,<3.9.0",
   "description":"",
   "author":"",
   "email":"",
   "url":"",
   "license":"",
-  "spacy_git_version":"fdca647",
+  "spacy_git_version":"0069cf9",
   "vectors":{
     "width":0,
     "vectors":0,
@@ -21,27 +21,17 @@
 
     ],
     "ner":[
-      "ACCUSED",
-      "ACT_NAME",
-      "BAIL_STATUS",
-      "CASE_NUMBER",
-      "CASE_TYPE",
-      "CITATION",
-      "COURT_NAME",
-      "EVIDENCE",
-      "FINAL_VERDICT",
-      "FIR_NUMBER",
-      "GOVERNMENT_COUNSEL",
+      "CASE_NAME",
+      "COURT",
+      "DATE",
       "JUDGE",
-      "LOWER_COURT",
-      "ORDER_DATE",
-      "ORG",
-      "PARAGRAPH_NUMBER",
-      "PRECEDENT_CASE",
+      "LAWYER",
+      "LEGAL_TERM",
+      "PETITIONER",
+      "PROVISION",
       "RESPONDENT",
-      "SECTION",
-      "SECTION_HEADER",
-      "SENIOR_ADVOCATE"
+      "STATUTE",
+      "VERDICT"
     ]
   },
   "pipeline":[
@@ -56,16 +46,36 @@
 
   ],
   "performance":{
-    "ents_f":0.1935483871,
-    "ents_p":0.1666666667,
-    "ents_r":0.2307692308,
+    "ents_f":0.175,
+    "ents_p":0.25,
+    "ents_r":0.1346153846,
     "ents_per_type":{
-      "GOVERNMENT_COUNSEL":{
+      "COURT":{
+        "p":1.0,
+        "r":1.0,
+        "f":1.0
+      },
+      "LAWYER":{
         "p":0.0,
         "r":0.0,
         "f":0.0
       },
-      "RESPONDENT":{
+      "LEGAL_TERM":{
+        "p":0.1428571429,
+        "r":0.1111111111,
+        "f":0.125
+      },
+      "DATE":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "PROVISION":{
+        "p":0.8333333333,
+        "r":0.4166666667,
+        "f":0.5555555556
+      },
+      "STATUTE":{
         "p":0.0,
         "r":0.0,
         "f":0.0
@@ -75,53 +85,28 @@
         "r":0.0,
         "f":0.0
       },
-      "CORAM":{
+      "PETITIONER":{
         "p":0.0,
         "r":0.0,
         "f":0.0
       },
-      "FIR_NUMBER":{
-        "p":1.0,
-        "r":1.0,
-        "f":1.0
-      },
-      "POLICE_STATION":{
+      "RESPONDENT":{
         "p":0.0,
         "r":0.0,
         "f":0.0
       },
-      "SENIOR_ADVOCATE":{
-        "p":0.4,
-        "r":0.4,
-        "f":0.4
-      },
-      "ORG":{
+      "CASE_NAME":{
         "p":0.0,
         "r":0.0,
         "f":0.0
       },
-      "CASE_TYPE":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "BAIL_STATUS":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "JUDGMENT_DATE":{
-        "p":0.0,
-        "r":0.0,
-        "f":0.0
-      },
-      "CITATION":{
+      "VERDICT":{
         "p":0.0,
         "r":0.0,
         "f":0.0
       }
     },
-    "tok2vec_loss":0.0,
-    "ner_loss":72.6535873413
+    "tok2vec_loss":211.0131280636,
+    "ner_loss":396.702331543
   }
 }
